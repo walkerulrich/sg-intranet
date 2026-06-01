@@ -1,0 +1,77 @@
+:root {
+  /* Couleurs Société Générale */
+  --sg-red: #E60028;
+  --sg-red-dark: #B8001F;
+  --sg-red-light: #FFE5EA;
+  --sg-black: #0A0A0A;
+  --sg-charcoal: #1A1A1A;
+  --sg-gray-900: #212121;
+  --sg-gray-700: #4A4A4A;
+  --sg-gray-500: #8A8A8A;
+  --sg-gray-300: #D4D4D4;
+  --sg-gray-100: #F4F4F4;
+  --sg-gray-50: #FAFAFA;
+  --sg-white: #FFFFFF;
+
+  /* Typography */
+  --font-serif: "Instrument Serif", "Times New Roman", serif;
+  --font-sans: "Manrope", -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: var(--sg-gray-50);
+  color: var(--sg-black);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--sg-red);
+  color: var(--sg-white);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--sg-gray-100); }
+::-webkit-scrollbar-thumb { background: var(--sg-gray-300); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sg-gray-500); }
+
+/* Animations utilitaires */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.fade-up {
+  animation: fadeUp 0.5s ease-out both;
+}

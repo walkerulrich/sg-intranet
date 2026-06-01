@@ -28,7 +28,7 @@ docker compose up --build
 |----------|----------|------|
 | `alice` | `alice2026` | Manager |
 | `ali` | `ali2026` | DevOps Engineer |
-| `lucas` | `lucas2026` | Alternant DevSecOps |
+| `walker` | `walker2026` | Alternant DevSecOps |
 | `sophie` | `sophie2026` | Architecte Cloud |
 | `marc` | `marc2026` | Lead Developer |
 | `emma` | `emma2026` | Product Owner |

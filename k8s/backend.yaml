@@ -23,6 +23,14 @@ spec:
               value: "postgresql+asyncpg://sg:sg@postgres:5432/sg_intranet"
             - name: JWT_SECRET
               value: "sg-intranet-secret-2026"
+            - name: OTEL_SERVICE_NAME
+              value: "sg-intranet-backend"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger-collector.observability.svc.cluster.local:4317"
+            - name: OTEL_TRACES_SAMPLER
+              value: "always_on"
+            - name: ENV
+              value: "production"
 ---
 apiVersion: v1
 kind: Service

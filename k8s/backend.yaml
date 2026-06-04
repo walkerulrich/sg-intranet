@@ -13,6 +13,12 @@ spec:
       labels:
         app: backend
     spec:
+      volumes:
+        - name: log-volume
+          emptyDir: {}
+        - name: fluent-bit-config
+          configMap:
+            name: fluent-bit-config
       containers:
         - name: backend
           image: 881005428220.dkr.ecr.eu-north-1.amazonaws.com/societe_generale:backend-latest
@@ -31,6 +37,17 @@ spec:
               value: "always_on"
             - name: ENV
               value: "production"
+          volumeMounts:
+            - name: log-volume
+              mountPath: /var/log/app
+
+        - name: fluent-bit
+          image: fluent/fluent-bit:3.0
+          volumeMounts:
+            - name: log-volume
+              mountPath: /var/log/app
+            - name: fluent-bit-config
+              mountPath: /fluent-bit/etc/
 ---
 apiVersion: v1
 kind: Service

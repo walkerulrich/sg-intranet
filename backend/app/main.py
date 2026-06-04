@@ -1,6 +1,7 @@
 import logging
 import json
 import time
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,7 +13,6 @@ from app.api.users import router as users_router
 from app.api.gallery import router as gallery_router
 
 # --- Logging JSON vers fichier ---
-import os
 os.makedirs("/var/log/app", exist_ok=True)
 
 json_handler = logging.FileHandler("/var/log/app/backend.log")
@@ -37,7 +37,6 @@ logger = logging.getLogger("sg-intranet")
 async def lifespan(app: FastAPI):
     from app.telemetry import setup_telemetry
     setup_telemetry()
-    Instrumentator().instrument(app).expose(app)
     await init_db()
     async with AsyncSessionLocal() as db:
         await seed_data(db)
@@ -49,6 +48,9 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+# --- Prometheus --- exposé ici, au niveau app
+Instrumentator().instrument(app).expose(app)
 
 # --- Middleware HTTP logging ---
 @app.middleware("http")

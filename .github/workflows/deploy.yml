@@ -115,7 +115,7 @@ jobs:
       - name: Build & Push Frontend
         run: |
           docker build \
-            --build-arg VITE_API_URL=http://${{ secrets.EC2_HOST }}:8000 \
+            --build-arg VITE_API_URL=http://k8s-sgintran-sgintran-55c5fc87db-1671610882.eu-north-1.elb.amazonaws.com \
             -t $ECR_REGISTRY/societe_generale:frontend-${{ github.sha }} ./frontend
           docker push $ECR_REGISTRY/societe_generale:frontend-${{ github.sha }}
           docker tag $ECR_REGISTRY/societe_generale:frontend-${{ github.sha }} $ECR_REGISTRY/societe_generale:frontend-latest
@@ -160,8 +160,9 @@ jobs:
 
       - name: Wait for rollout
         run: |
-          kubectl rollout status deployment/backend -n sg-intranet --timeout=120s
-          kubectl rollout status deployment/frontend -n sg-intranet --timeout=120s
+          kubectl rollout status deployment/backend -n sg-intranet --timeout=180s
+          kubectl rollout status deployment/frontend -n sg-intranet --timeout=180s
+          kubectl rollout status deployment/postgres -n sg-intranet --timeout=180s || true
 
       - name: Get ALB URL
         run: |

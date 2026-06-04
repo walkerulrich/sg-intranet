@@ -1,7 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-# ↓↓↓ OPENTELEMETRY AJOUTÉ ↓↓↓
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
@@ -10,7 +9,6 @@ from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 from opentelemetry.sdk.resources import Resource
 import os
-# ↑↑↑ FIN OPENTELEMETRY ↑↑↑
 
 from app.database import init_db, AsyncSessionLocal
 from app.services.seed import seed_data
@@ -18,7 +16,7 @@ from app.api.auth import router as auth_router
 from app.api.users import router as users_router
 from app.api.gallery import router as gallery_router
 
-# ↓↓↓ OPENTELEMETRY AJOUTÉ ↓↓↓
+
 def setup_telemetry():
     resource = Resource.create({"service.name": "sg-intranet-backend"})
     provider = TracerProvider(resource=resource)
@@ -28,7 +26,6 @@ def setup_telemetry():
     trace.set_tracer_provider(provider)
 
 setup_telemetry()
-# ↑↑↑ FIN OPENTELEMETRY ↑↑↑
 
 
 @asynccontextmanager
@@ -51,6 +48,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://16.171.200.214",
+        "http://k8s-sgintran-sgintran-55c5fc87db-1671610882.eu-north-1.elb.amazonaws.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -61,10 +59,8 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(gallery_router)
 
-# ↓↓↓ OPENTELEMETRY AJOUTÉ ↓↓↓
 FastAPIInstrumentor.instrument_app(app)
 SQLAlchemyInstrumentor().instrument()
-# ↑↑↑ FIN OPENTELEMETRY ↑↑↑
 
 
 @app.get("/health")

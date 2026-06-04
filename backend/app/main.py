@@ -14,9 +14,6 @@ async def lifespan(app: FastAPI):
     from app.telemetry import setup_telemetry
     setup_telemetry()
 
-    from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-    FastAPIInstrumentor.instrument_app(app)
-
     await init_db()
     async with AsyncSessionLocal() as db:
         await seed_data(db)

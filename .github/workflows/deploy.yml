@@ -37,7 +37,7 @@ jobs:
       - name: Run Flake8
         run: |
           cd backend
-          flake8 . --max-line-length=120 --exclude=__pycache__,app/services/seed.py --extend-ignore=F401,E501
+          flake8 . --max-line-length=120 --exclude=__pycache__ --extend-ignore=F401,E501
 
   # ─────────────────────────────────────────
   # JOB 2 : TESTS

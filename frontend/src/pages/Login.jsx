@@ -273,9 +273,9 @@ export function Login() {
               Comptes de démonstration
             </div>
             <div style={{ fontSize: "13px", color: "var(--sg-gray-700)", fontFamily: "monospace", lineHeight: "1.8" }}>
-              <div><strong>alice</strong> / alice2026 — Manager</div>
-              <div><strong>ali</strong> / ali2026 — DevOps</div>
-              <div><strong>lucas</strong> / lucas2026 — Alternant</div>
+              <div><strong></strong> </div>
+              <div><strong></strong> </div>
+              <div><strong></strong> </div>
             </div>
           </div>
         </div>
